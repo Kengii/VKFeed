@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F32819D28844A2600C741DD /* FeedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F32819C28844A2600C741DD /* FeedResponse.swift */; };
+		7F32819F28844CDC00C741DD /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F32819E28844CDC00C741DD /* NetworkDataFetcher.swift */; };
 		7F5301D428830C1D004DE604 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5301D328830C1D004DE604 /* AppDelegate.swift */; };
 		7F5301D628830C1D004DE604 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5301D528830C1D004DE604 /* SceneDelegate.swift */; };
 		7F5301DD28830C1F004DE604 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F5301DC28830C1F004DE604 /* Assets.xcassets */; };
@@ -16,11 +18,15 @@
 		7F5301F228831460004DE604 /* AuthViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5301F128831460004DE604 /* AuthViewController.storyboard */; };
 		7F5A071B2883213E00FD04BF /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A071A2883213E00FD04BF /* FeedViewController.swift */; };
 		7F5A071D2883214F00FD04BF /* FeedViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F5A071C2883214F00FD04BF /* FeedViewController.storyboard */; };
+		7F5A071F28843C1E00FD04BF /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A071E28843C1E00FD04BF /* NetworkService.swift */; };
+		7F5A072128843D1600FD04BF /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A072028843D1600FD04BF /* API.swift */; };
 		E952278A0916EB1CC216E24D /* Pods_VKFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBA9DFDFAE0A61E1D2FA804 /* Pods_VKFeed.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5BBA9DFDFAE0A61E1D2FA804 /* Pods_VKFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F32819C28844A2600C741DD /* FeedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedResponse.swift; sourceTree = "<group>"; };
+		7F32819E28844CDC00C741DD /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		7F5301D028830C1D004DE604 /* VKFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F5301D328830C1D004DE604 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F5301D528830C1D004DE604 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +38,8 @@
 		7F5301F128831460004DE604 /* AuthViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AuthViewController.storyboard; sourceTree = "<group>"; };
 		7F5A071A2883213E00FD04BF /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		7F5A071C2883214F00FD04BF /* FeedViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FeedViewController.storyboard; sourceTree = "<group>"; };
+		7F5A071E28843C1E00FD04BF /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		7F5A072028843D1600FD04BF /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		C209CAC47C64641EC0FE1ECC /* Pods-VKFeed.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKFeed.debug.xcconfig"; path = "Target Support Files/Pods-VKFeed/Pods-VKFeed.debug.xcconfig"; sourceTree = "<group>"; };
 		F16F5F28FA349384FEBE5B72 /* Pods-VKFeed.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKFeed.release.xcconfig"; path = "Target Support Files/Pods-VKFeed/Pods-VKFeed.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +110,11 @@
 		7F5301E9288310A6004DE604 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				7F5A0722288448DE00FD04BF /* Models */,
 				7F5301E7288310A0004DE604 /* AuthService.swift */,
+				7F5A071E28843C1E00FD04BF /* NetworkService.swift */,
+				7F5A072028843D1600FD04BF /* API.swift */,
+				7F32819E28844CDC00C741DD /* NetworkDataFetcher.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -114,6 +126,14 @@
 				7F5301F128831460004DE604 /* AuthViewController.storyboard */,
 			);
 			path = AUth;
+			sourceTree = "<group>";
+		};
+		7F5A0722288448DE00FD04BF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7F32819C28844A2600C741DD /* FeedResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,11 +252,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F32819D28844A2600C741DD /* FeedResponse.swift in Sources */,
 				7F5301F0288313C7004DE604 /* AuthViewController.swift in Sources */,
 				7F5301D428830C1D004DE604 /* AppDelegate.swift in Sources */,
 				7F5A071B2883213E00FD04BF /* FeedViewController.swift in Sources */,
 				7F5301D628830C1D004DE604 /* SceneDelegate.swift in Sources */,
+				7F5A071F28843C1E00FD04BF /* NetworkService.swift in Sources */,
+				7F32819F28844CDC00C741DD /* NetworkDataFetcher.swift in Sources */,
 				7F5301E8288310A0004DE604 /* AuthService.swift in Sources */,
+				7F5A072128843D1600FD04BF /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

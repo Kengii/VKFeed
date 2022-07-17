@@ -20,6 +20,10 @@ final class AuthService: NSObject, VKSdkDelegate, VKSdkUIDelegate {
     private let vkSdk: VKSdk
     
     weak var serviceDelegate: AuthServiceDelegate?
+    
+    var token: String? {
+        return VKSdk.accessToken()?.accessToken
+    }
 
     override init() {
 
@@ -30,7 +34,7 @@ final class AuthService: NSObject, VKSdkDelegate, VKSdkUIDelegate {
     }
     
     func wakeUpSession() {
-        let scope = ["offline"]
+        let scope = ["wall", "friends"]
         
         VKSdk.wakeUpSession(scope) { [serviceDelegate] (state, error) in
             if state == VKAuthorizationState.authorized {
@@ -50,9 +54,9 @@ final class AuthService: NSObject, VKSdkDelegate, VKSdkUIDelegate {
 
     func vkSdkAccessAuthorizationFinished(with result: VKAuthorizationResult!) {
         print(#function)
-        if result.token != nil {
+//        if result.token != nil {
             serviceDelegate?.authServiceSignIn()
-        }
+//        }
     }
 
     func vkSdkUserAuthorizationFailed() {

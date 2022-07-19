@@ -11,7 +11,7 @@ protocol DataFetcher {
     func getFeed(response: @escaping (FeedResponse?) -> Void)
 }
 
-struct NetwirkDataFetcher: DataFetcher {
+struct NetworkDataFetcher: DataFetcher {
     
     let networking: Networking
     

@@ -18,6 +18,7 @@
 		7F3281B0288709F900C741DD /* NewsFeedViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F3281AF288709F900C741DD /* NewsFeedViewController.storyboard */; };
 		7F3281B32887136300C741DD /* NewsFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3281B22887136300C741DD /* NewsFeedCell.swift */; };
 		7F3281B5288713AA00C741DD /* NewsFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F3281B4288713AA00C741DD /* NewsFeedCell.xib */; };
+		7F3281B82888627800C741DD /* WedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3281B72888627800C741DD /* WedImageView.swift */; };
 		7F5301D428830C1D004DE604 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5301D328830C1D004DE604 /* AppDelegate.swift */; };
 		7F5301D628830C1D004DE604 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5301D528830C1D004DE604 /* SceneDelegate.swift */; };
 		7F5301DD28830C1F004DE604 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F5301DC28830C1F004DE604 /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		7F3281AF288709F900C741DD /* NewsFeedViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = NewsFeedViewController.storyboard; sourceTree = "<group>"; };
 		7F3281B22887136300C741DD /* NewsFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedCell.swift; sourceTree = "<group>"; };
 		7F3281B4288713AA00C741DD /* NewsFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsFeedCell.xib; sourceTree = "<group>"; };
+		7F3281B72888627800C741DD /* WedImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WedImageView.swift; sourceTree = "<group>"; };
 		7F5301D028830C1D004DE604 /* VKFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F5301D328830C1D004DE604 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F5301D528830C1D004DE604 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,10 +113,17 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		7F3281B62888626300C741DD /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				7F3281B72888627800C741DD /* WedImageView.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		7F5301C728830C1D004DE604 = {
 			isa = PBXGroup;
 			children = (
-				7F3281A02887093D00C741DD /* NewsFeed */,
 				7F5301D228830C1D004DE604 /* VKFeed */,
 				7F5301D128830C1D004DE604 /* Products */,
 				722956C60BC9F24F81F80AD6 /* Pods */,
@@ -137,6 +146,8 @@
 				7F5301D528830C1D004DE604 /* SceneDelegate.swift */,
 				7F5301E9288310A6004DE604 /* Services */,
 				7F5301EE288312E9004DE604 /* AUth */,
+				7F3281A02887093D00C741DD /* NewsFeed */,
+				7F3281B62888626300C741DD /* Helpers */,
 				7F5301DC28830C1F004DE604 /* Assets.xcassets */,
 				7F5301DE28830C1F004DE604 /* LaunchScreen.storyboard */,
 				7F5301E128830C1F004DE604 /* Info.plist */,
@@ -301,6 +312,7 @@
 				7F3281A92887095E00C741DD /* NewsFeedWorker.swift in Sources */,
 				7F3281AA2887095E00C741DD /* NewsFeedRouter.swift in Sources */,
 				7F5301E8288310A0004DE604 /* AuthService.swift in Sources */,
+				7F3281B82888627800C741DD /* WedImageView.swift in Sources */,
 				7F5A072128843D1600FD04BF /* API.swift in Sources */,
 				7F3281AB2887095E00C741DD /* NewsFeedModels.swift in Sources */,
 				7F3281B32887136300C741DD /* NewsFeedCell.swift in Sources */,

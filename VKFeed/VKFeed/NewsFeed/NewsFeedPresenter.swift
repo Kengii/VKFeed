@@ -13,7 +13,12 @@ protocol NewsFeedPresentationLogic {
 }
 
 class NewsFeedPresenter: NewsFeedPresentationLogic {
+    
     weak var viewController: NewsFeedDisplayLogic?
+    
+    var cellLayoutCalculator: FeedCellLayoutCaculatorProtocol = FeedCellLayoutCaculator()
+    
+    
     let dateFormatter: DateFormatter = {
         let dt = DateFormatter()
         dt.locale = Locale(identifier: "ru_RU")
@@ -44,6 +49,8 @@ class NewsFeedPresenter: NewsFeedPresentationLogic {
         let date = Date(timeIntervalSince1970: feedItem.date)
         let dateTitle = dateFormatter.string(from: date)
         
+        let sizes = cellLayoutCalculator.sizes(postText: feedItem.text, photoAttachment: photoAttechment)
+        
         return FeedViewModel.Cell.init(iconUrlString: profile.photo,
                                        name: profile.name,
                                        date: dateTitle,
@@ -52,14 +59,15 @@ class NewsFeedPresenter: NewsFeedPresentationLogic {
                                        comments: String(feedItem.comments?.count ?? 0),
                                        shares: String(feedItem.reposts?.count ?? 0),
                                        views: String(feedItem.views?.count ?? 0),
-                                        photoAttachement: photoAttechment)
+                                       photoAttachement: photoAttechment,
+                                       sizes: sizes)
 
     }
     
     private func profile( for sourceId: Int, profiles: [Profile], groups: [Group]) -> ProFileRepresentable {
         let profilesOrGroups: [ProFileRepresentable] = sourceId >= 0 ? profiles : groups
         let normalSourceId = sourceId >= 0 ? sourceId : -sourceId
-        let profileRepresentable = profilesOrGroups.first { myProfileRepresentable in
+        let profileRepresentable = profilesOrGroups.first { myProfileRepresentable -> Bool in
             myProfileRepresentable.id == normalSourceId
         }
         return profileRepresentable!

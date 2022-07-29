@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol NewsFeedCellDelegate: AnyObject {
+    func revealPost(for cell: NewsFeedCell)
+}
+
 protocol FeedCellViewModel {
     
     var iconUrlString: String { get }
@@ -18,7 +22,7 @@ protocol FeedCellViewModel {
     var comments: String? { get }
     var shares: String? { get }
     var views: String? { get }
-    var photoAttachement: FeedCellPhotoAttachementViewModel? { get }
+    var photoAttachements: [FeedCellPhotoAttachementViewModel] { get }
     var sizes: FeedCellSizes { get }
 }
 
@@ -27,6 +31,7 @@ protocol FeedCellSizes {
     var attachmentFrame: CGRect { get }
     var bottomView: CGRect { get }
     var totalHeight: CGFloat { get }
+    var moreTextButtonFrame: CGRect { get }
 }
 
 protocol FeedCellPhotoAttachementViewModel {
@@ -36,6 +41,8 @@ protocol FeedCellPhotoAttachementViewModel {
 }
 
 class NewsFeedCell: UITableViewCell {
+    
+    weak var delegate: NewsFeedCellDelegate?
      
     static let reuseId = "NewsFeedCell"
     
@@ -51,6 +58,18 @@ class NewsFeedCell: UITableViewCell {
     @IBOutlet weak var postImagView: WedImageView!
     @IBOutlet weak var bottomView: UIView!
     
+    let moreTextButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        button.setTitleColor(UIColor.blue, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .center
+        button.setTitle("Показать полностью...", for: .normal)
+        return button
+    }()
+    
+    let galleryCollectionView = GalleryCollectionView()
+    
     override func prepareForReuse() {
         iconImageView.set(imageURL: nil)
         postImagView.set(imageURL: nil)
@@ -64,9 +83,19 @@ class NewsFeedCell: UITableViewCell {
         
         cardView.layer.cornerRadius = 10
         cardView.clipsToBounds = true
+        cardView.addSubview(moreTextButton)
+        cardView.addSubview(galleryCollectionView)
+        
+        // moreTextButton constraints
         
         backgroundColor = .clear
         selectionStyle = .none
+        
+        moreTextButton.addTarget(self, action: #selector(moreTextButtonTouch), for: .touchUpInside)
+    }
+    
+    @objc func moreTextButtonTouch() {
+        delegate?.revealPost(for: self)
     }
     
     func set(viewModel: FeedCellViewModel) {
@@ -78,16 +107,25 @@ class NewsFeedCell: UITableViewCell {
         sharesLabel.text = viewModel.shares
         viewsLabel.text = viewModel.views
         iconImageView.set(imageURL: viewModel.iconUrlString)
-        
         postLabel.frame = viewModel.sizes.postLableFrame
-        postImagView.frame = viewModel.sizes.attachmentFrame
-        bottomView.frame = viewModel.sizes.bottomView
         
-        if let photoAttachement = viewModel.photoAttachement {
-            postImagView.set(imageURL: photoAttachement.photoURLString)
+        bottomView.frame = viewModel.sizes.bottomView
+        moreTextButton.frame = viewModel.sizes.moreTextButtonFrame
+        
+        if let photoAttachment = viewModel.photoAttachements.first, viewModel.photoAttachements.count == 1 {
+            postImagView.set(imageURL: photoAttachment.photoURLString)
             postImagView.isHidden = false
-        } else {
+            galleryCollectionView.isHidden = true
+            postImagView.frame = viewModel.sizes.attachmentFrame
+        } else if viewModel.photoAttachements.count > 1 {
+            galleryCollectionView.frame = viewModel.sizes.attachmentFrame
             postImagView.isHidden = true
+            galleryCollectionView.isHidden = false
+            galleryCollectionView.set(photos: viewModel.photoAttachements)
+        }
+        else {
+            postImagView.isHidden = true
+            galleryCollectionView.isHidden = true
         }
     }
 }

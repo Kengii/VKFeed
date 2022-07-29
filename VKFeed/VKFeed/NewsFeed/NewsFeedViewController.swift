@@ -12,7 +12,7 @@ protocol NewsFeedDisplayLogic: AnyObject {
   func displayData(viewModel: NewsFeed.Model.ViewModel.ViewModelData)
 }
 
-class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic {
+class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic, NewsFeedCellDelegate {
 
   var interactor: NewsFeedBusinessLogic?
   var router: (NSObjectProtocol & NewsFeedRoutingLogic)?
@@ -60,6 +60,15 @@ class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic {
           table.reloadData()
       }
   }
+    
+    // MARK: NewsFeedCellDelegate
+    
+    func revealPost(for cell: NewsFeedCell) {
+        guard let indexPath = table.indexPath(for: cell) else { return }
+        let cellViewModel = feedViewModel.cells[indexPath.row]
+        
+        interactor?.makeRequest(request: .revealPostIds(postId: cellViewModel.postId))
+    }
   
 }
 
@@ -73,6 +82,7 @@ extension NewsFeedViewController: UITableViewDelegate, UITableViewDataSource {
         
         let cellViewModel = feedViewModel.cells[indexPath.row]
         cell.set(viewModel: cellViewModel)
+        cell.delegate = self
         return cell
     }
    
@@ -81,4 +91,8 @@ extension NewsFeedViewController: UITableViewDelegate, UITableViewDataSource {
         return cellViewModel.sizes.totalHeight
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        let cellViewModel = feedViewModel.cells[indexPath.row]
+        return cellViewModel.sizes.totalHeight
+    }
 }

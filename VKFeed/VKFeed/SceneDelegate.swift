@@ -6,17 +6,34 @@
 //
 
 import UIKit
+import VK_ios_sdk
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, AuthServiceDelegate {
+    
     var window: UIWindow?
-
-
+    var authService: AuthService!
+    
+    static func shared() -> SceneDelegate {
+        let scene = UIApplication.shared.connectedScenes.first
+        let sd: SceneDelegate = (((scene?.delegate as? SceneDelegate)!))
+        return sd
+    }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        authService = AuthService()
+        authService.serviceDelegate = self
+        let authVC = UIStoryboard(name: "AuthViewController", bundle: nil).instantiateInitialViewController() as? AuthViewController
+        window?.rootViewController = authVC
+        window?.makeKeyAndVisible()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            VKSdk.processOpen(url, fromApplication: UIApplication.OpenURLOptionsKey.sourceApplication.rawValue)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +64,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func authServiceShouldShow(_ viewcontroller: UIViewController) {
+        window?.rootViewController?.present(viewcontroller, animated: true, completion: nil)
+        print(#function)
+    }
+    
+    func authServiceSignIn() {
+        print(#function)
+        let feedVC = UIStoryboard(name: "NewsFeedViewController", bundle: nil).instantiateInitialViewController() as! NewsFeedViewController
+        let navVC = UINavigationController(rootViewController: feedVC)
+        window?.rootViewController = navVC
+    }
+    
+    func authServiceDidSignInFail() {
+        print(#function)
+    }
 
 }
 

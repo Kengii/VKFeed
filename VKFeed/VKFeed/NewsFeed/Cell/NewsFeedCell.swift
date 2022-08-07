@@ -50,13 +50,13 @@ class NewsFeedCell: UITableViewCell {
     @IBOutlet weak var iconImageView: WedImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var postLabel: UILabel!
     @IBOutlet weak var likesLabel: UILabel!
     @IBOutlet weak var commentsLabel: UILabel!
     @IBOutlet weak var sharesLabel: UILabel!
     @IBOutlet weak var viewsLabel: UILabel!
     @IBOutlet weak var postImagView: WedImageView!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var postLabel: UITextView!
     
     let moreTextButton: UIButton = {
         let button = UIButton()
@@ -92,6 +92,7 @@ class NewsFeedCell: UITableViewCell {
         selectionStyle = .none
         
         moreTextButton.addTarget(self, action: #selector(moreTextButtonTouch), for: .touchUpInside)
+        setupTextView()
     }
     
     @objc func moreTextButtonTouch() {
@@ -113,19 +114,31 @@ class NewsFeedCell: UITableViewCell {
         moreTextButton.frame = viewModel.sizes.moreTextButtonFrame
         
         if let photoAttachment = viewModel.photoAttachements.first, viewModel.photoAttachements.count == 1 {
-            postImagView.set(imageURL: photoAttachment.photoURLString)
             postImagView.isHidden = false
             galleryCollectionView.isHidden = true
+            postImagView.set(imageURL: photoAttachment.photoURLString)
             postImagView.frame = viewModel.sizes.attachmentFrame
         } else if viewModel.photoAttachements.count > 1 {
-            galleryCollectionView.frame = viewModel.sizes.attachmentFrame
             postImagView.isHidden = true
             galleryCollectionView.isHidden = false
+            galleryCollectionView.frame = viewModel.sizes.attachmentFrame
             galleryCollectionView.set(photos: viewModel.photoAttachements)
         }
         else {
             postImagView.isHidden = true
             galleryCollectionView.isHidden = true
         }
+    }
+    
+    func setupTextView() {
+        postLabel.font = Constants.postLabelFont
+        postLabel.isScrollEnabled = false
+        postLabel.isSelectable = true
+        postLabel.isUserInteractionEnabled = true
+        postLabel.isEditable = false
+        let padding = postLabel.textContainer.lineFragmentPadding
+        postLabel.textContainerInset = UIEdgeInsets.init(top: 0, left: -padding, bottom: 0, right: -padding)
+        
+        postLabel.dataDetectorTypes = UIDataDetectorTypes.all
     }
 }

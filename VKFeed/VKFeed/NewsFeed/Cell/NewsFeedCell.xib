@@ -46,14 +46,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qS-gM-253">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PKa-E2-s38">
                                 <rect key="frame" x="8" y="52" width="343" height="49"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdL-tm-2sr" customClass="WedImageView" customModule="VKFeed" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="112" width="359" height="43"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -148,7 +148,7 @@
                 <outlet property="likesLabel" destination="1ua-A6-J11" id="VOa-4I-OWv"/>
                 <outlet property="nameLabel" destination="8ZR-1L-3O0" id="7Ra-fy-JsM"/>
                 <outlet property="postImagView" destination="wdL-tm-2sr" id="yf8-cy-vZt"/>
-                <outlet property="postLabel" destination="0qS-gM-253" id="69c-oF-EYk"/>
+                <outlet property="postLabel" destination="PKa-E2-s38" id="gG1-BA-loZ"/>
                 <outlet property="sharesLabel" destination="eRc-t6-zdU" id="PsR-fm-J0e"/>
                 <outlet property="viewsLabel" destination="Ziy-Ln-QVC" id="NqW-Et-QB9"/>
             </connections>

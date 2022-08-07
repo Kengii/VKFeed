@@ -67,7 +67,7 @@ class RowLayout: UICollectionViewLayout {
             let indexPath = IndexPath(item: item, section: 0)
             
             let ratio = photosRatio[indexPath.row]
-            let width = rowHeight / ratio
+            let width = (rowHeight / ratio)
             let frame = CGRect(x: xOffset[row], y: yOffset[row], width: width, height: rowHeight)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             

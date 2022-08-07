@@ -10,7 +10,12 @@ import UIKit
 
 class WedImageView: UIImageView {
     
+    private var currentUrlString: String?
+    
     func set(imageURL: String?) {
+        
+        currentUrlString = imageURL
+        
         guard let imageURL = imageURL, let url = URL(string: imageURL) else {
             self.image = nil
             return }
@@ -24,7 +29,6 @@ class WedImageView: UIImageView {
             
             DispatchQueue.main.async {
                 if let data = data, let response = response {
-                    self?.image = UIImage(data: data)
                     self?.handleLoadedImage(data: data, response: response)
                 }
             }
@@ -36,5 +40,8 @@ class WedImageView: UIImageView {
         guard let responseURL = response.url else { return }
         let cachedResponse = CachedURLResponse(response: response, data: data)
         URLCache.shared.storeCachedResponse(cachedResponse, for: URLRequest(url: responseURL))
+        if responseURL.absoluteString == currentUrlString {
+            self.image = UIImage(data: data)
+        }
     }
 }

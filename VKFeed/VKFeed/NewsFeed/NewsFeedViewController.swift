@@ -18,6 +18,12 @@ class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic, NewsFeedCe
   var router: (NSObjectProtocol & NewsFeedRoutingLogic)?
   
     private var feedViewModel = FeedViewModel.init(cells: [ ])
+    private var titleView = TitleView()
+    private var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
     
     @IBOutlet weak var table: UITableView!
     
@@ -43,14 +49,35 @@ class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic, NewsFeedCe
   override func viewDidLoad() {
       super.viewDidLoad()
       setup()
+      setupBars()
+      setupTable()
       
-      table.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: NewsFeedCell.reuseId)
-      
-      table.separatorStyle = .none
-      table.backgroundColor = .clear
       view.backgroundColor = #colorLiteral(red: 0.4392156899, green: 0.01176470611, blue: 0.1921568662, alpha: 1)
+      
       interactor?.makeRequest(request: .getNewsFeed)
+      interactor?.makeRequest(request: .getUser)
   }
+    
+    private func setupTable() {
+        
+        let topInset: CGFloat = 8
+        table.contentInset.top = topInset
+        
+        table.register(UINib(nibName: "NewsFeedCell", bundle: nil), forCellReuseIdentifier: NewsFeedCell.reuseId)
+        table.separatorStyle = .none
+        table.backgroundColor = .clear
+        table.addSubview(refreshControl)
+    }
+    
+    private func setupBars() {
+        self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationItem.titleView = titleView
+    }
+    
+    @objc func refresh() {
+        interactor?.makeRequest(request: .getNewsFeed)
+    }
   
   func displayData(viewModel: NewsFeed.Model.ViewModel.ViewModelData) {
       
@@ -58,8 +85,17 @@ class NewsFeedViewController: UIViewController, NewsFeedDisplayLogic, NewsFeedCe
       case .displayNewsFeed(feedViewModel: let feedViewModel):
           self.feedViewModel = feedViewModel
           table.reloadData()
+          refreshControl.endRefreshing()
+      case .displayUser(userViewModel: let userViewModel):
+          titleView.set(userViewModel: userViewModel)
       }
   }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if scrollView.contentOffset.y > scrollView.contentSize.height / 1.1 {
+            interactor?.makeRequest(request: .getNextBatch)
+        }
+    }
     
     // MARK: NewsFeedCellDelegate
     

@@ -28,7 +28,6 @@ final class NetworkService: Networking {
         let request = URLRequest(url: url)
         let task = createDataTask(from: request, complition: complition)
         task.resume()
-        print(url)
          }
     
     private func createDataTask(from request: URLRequest, complition: @escaping (Data?, Error?) -> Void) -> URLSessionDataTask {
@@ -44,7 +43,7 @@ final class NetworkService: Networking {
         
         components.scheme = API.scheme
         components.host = API.host
-        components.path = API.newsFeed
+        components.path = path
         components.queryItems = params.map { URLQueryItem(name: $0, value: $1) }
         
             return components.url!

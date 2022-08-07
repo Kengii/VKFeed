@@ -37,6 +37,9 @@ class NewsFeedPresenter: NewsFeedPresentationLogic {
             }
             let feedViewModel = FeedViewModel.init(cells: cells)
             viewController?.displayData(viewModel: .displayNewsFeed(feedViewModel: feedViewModel))
+        case .presentUserInfo(user: let user):
+            let userViewModel = UserViewModel.init(photoUrlString: user?.photo100)
+            viewController?.displayData(viewModel: .displayUser(userViewModel: userViewModel))
         }
     }
 
@@ -55,17 +58,30 @@ class NewsFeedPresenter: NewsFeedPresentationLogic {
         
         let sizes = cellLayoutCalculator.sizes(postText: feedItem.text, photoAttachments: photoAttechments, isFullSizedPost: isFullSized)
         
+        let postText = feedItem.text?.replacingOccurrences(of: "<br>", with: "/n")
+        
         return FeedViewModel.Cell.init(postId: feedItem.postId, iconUrlString: profile.photo,
                                        name: profile.name,
                                        date: dateTitle,
-                                       text: feedItem.text ?? "",
-                                       likes: String(feedItem.likes?.count ?? 0),
-                                       comments: String(feedItem.comments?.count ?? 0),
-                                       shares: String(feedItem.reposts?.count ?? 0),
-                                       views: String(feedItem.views?.count ?? 0),
+                                       text: postText,
+                                       likes: fomattedCounter(feedItem.likes?.count),
+                                       comments: fomattedCounter(feedItem.comments?.count),
+                                       shares: fomattedCounter(feedItem.reposts?.count),
+                                       views: fomattedCounter(feedItem.views?.count),
                                        photoAttachements: photoAttechments,
                                        sizes: sizes)
 
+    }
+    
+    private func fomattedCounter(_ counter: Int?) -> String? {
+        guard let counter = counter, counter > 0 else { return nil }
+        var counterStr = String(counter)
+        if 4...6 ~= counterStr.count {
+            counterStr = String(counterStr.dropLast(3)) + "K"
+        } else if counterStr.count > 6 {
+            counterStr = String(counterStr.dropLast(6)) + "M "
+        }
+        return counterStr
     }
     
     private func profile( for sourceId: Int, profiles: [Profile], groups: [Group]) -> ProFileRepresentable {
@@ -77,15 +93,15 @@ class NewsFeedPresenter: NewsFeedPresentationLogic {
         return profileRepresentable!
     }
     
-    private func photoAttechment(feedItem: FeedItem) -> FeedViewModel.FeeCellPhotoAttechment? {
-        guard let photos = feedItem.attachments?.compactMap({ attechment in
-            attechment.photo
-        }), let firstPhoto = photos.first else { return nil}
-        return FeedViewModel.FeeCellPhotoAttechment.init(photoURLString:
-                                                            firstPhoto.srcBIG,
-                                                         width: firstPhoto.width,
-                                                         height: firstPhoto.height)
-    }
+//    private func photoAttechment(feedItem: FeedItem) -> FeedViewModel.FeeCellPhotoAttechment? {
+//        guard let photos = feedItem.attachments?.compactMap({ attechment in
+//            attechment.photo
+//        }), let firstPhoto = photos.first else { return nil}
+//        return FeedViewModel.FeeCellPhotoAttechment.init(photoURLString:
+//                                                            firstPhoto.srcBIG,
+//                                                         width: firstPhoto.width,
+//                                                         height: firstPhoto.height)
+//    }
     
     private func photoAttechments(feedItem: FeedItem) -> [FeedViewModel.FeeCellPhotoAttechment] {
         guard let attachments = feedItem.attachments else { return [] }
